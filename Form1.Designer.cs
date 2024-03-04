@@ -36,11 +36,11 @@
             // pictureBox1
             // 
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Image = Properties.Resources.circleoffifthsgood;
-            pictureBox1.Location = new Point(434, 108);
+            pictureBox1.Image = Properties.Resources.edited2;
+            pictureBox1.Location = new Point(539, 89);
             pictureBox1.Margin = new Padding(5);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(528, 534);
+            pictureBox1.Size = new Size(722, 674);
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -57,6 +57,8 @@
             // 
             AutoScaleDimensions = new SizeF(15F, 38F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BackColor = Color.Black;
             ClientSize = new Size(1797, 936);
             Controls.Add(textBox1);
             Controls.Add(pictureBox1);
