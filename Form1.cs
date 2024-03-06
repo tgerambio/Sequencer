@@ -1,4 +1,6 @@
-﻿namespace Sequencer
+﻿using System.Runtime.CompilerServices;
+
+namespace Sequencer
 {
     public partial class Form1 : Form
     {
@@ -19,6 +21,10 @@
 
         };
 
+        
+
+        private string? rootNote;
+
         private readonly List<string> MajorChordTypes = ["M", "Δ", "7"];
 
         private readonly List<string> MinorChordTypes = ["m", "m7", "7"];
@@ -30,15 +36,24 @@
             listBox1.Parent = pictureBox1;
         }
 
+        public delegate void TypeClickedEventHandler(object sender, EventArgs e);
+
+        public event TypeClickedEventHandler? TypeClicked;
+
+        protected virtual void OnTypeClicked(EventArgs e)
+        {
+            TypeClicked?.Invoke(this, e);
+        }
+
         private void PictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            //textBox1.Text = string.Format("X: {0} Y: {1}", e.X, e.Y); // to help find coords 
+            //textBox1.Text = string.Format("X: {0} Y: {1}", e.X, e.Y); 
 
             foreach (var rect in CoordMap) // not efficient
             {
                 if (rect.Key.Contains(e.X, e.Y))
                 {
-                    textBox1.Text = CoordMap[rect.Key];
+                    rootNote = CoordMap[rect.Key];
                     listBox1.Location = new Point(e.X, e.Y);
                     int x = rect.Key.Width;
                     listBox1.DataSource = x == 70 ? MajorChordTypes : x == 60 ? MinorChordTypes : DiminishedChordTypes;
@@ -52,7 +67,7 @@
         {
             ListBox lB = (ListBox)sender;
 
-            textBox1.Text = lB.SelectedItem?.ToString();
+            textBox1.Text =  rootNote + lB.SelectedItem?.ToString();
 
             listBox1.Visible = false;
         }
