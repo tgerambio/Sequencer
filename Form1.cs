@@ -9,7 +9,7 @@ namespace Sequencer
         {
             {new(324, 10, 70, 70), "C" }, {new(470, 50, 70, 70), "G" }, {new(578, 153, 70, 70), "D"}, {new(615, 300, 70, 70), "A"},
             {new(578, 441, 70, 70), "E"}, {new(471, 547, 70, 70), "B"}, {new(325, 584, 70, 70), "F♯"}, {new(183, 543,70, 70), "C♯"},
-            {new(79, 442, 70, 70), "A♭"}, {new(42, 298, 70, 70), "E"}, {new(81, 153, 70, 70), "B♭"}, {new(183, 54, 70, 70), "F"},
+            {new(79, 442, 70, 70), "A♭"}, {new(42, 298, 70, 70), "E♭"}, {new(81, 153, 70, 70), "B♭"}, {new(183, 54, 70, 70), "F"},
 
             {new(333, 100, 60, 60), "A" }, {new(434, 128, 60,60), "E" }, {new(510, 198, 60,60), "B"},{new(540, 303, 60, 60), "F♯"},
             {new(510, 409, 60, 60), "C♯"}, {new(434, 480, 60,60), "G♯"}, {new(333, 509, 60,60), "E♭"},{new(230, 480, 60, 60), "B♭"},
@@ -33,7 +33,8 @@ namespace Sequencer
         public CircleOfFifthsUI()
         {
             InitializeComponent();
-            ChordTypeBox.Parent = pictureBox1; 
+            ChordTypeBox.Parent = pictureBox1;
+            ChordLabel.Text = "0";
         }
 
         public delegate void TypeClickedEventHandler(object sender, EventArgs e);
@@ -57,6 +58,7 @@ namespace Sequencer
                     int x = rect.Width;
                     ChordTypeBox.DataSource = x == 70 ? majorChordTypes : x == 60 ? minorChordTypes : diminishedChordTypes;
                     ChordTypeBox.Visible = true;
+                    break;
                 }
             }
 
@@ -68,7 +70,7 @@ namespace Sequencer
 
             string? cType = lB.SelectedItem?.ToString();
 
-            textBox1.Text =  rootNote + cType;
+            ChordLabel.Text =  rootNote + cType;
 
             ChordTypeBox.Visible = false;
 
