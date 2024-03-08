@@ -1,6 +1,6 @@
 ﻿namespace Sequencer
 {
-    partial class Form1
+    partial class CircleOfFifthsUI
     {
         /// <summary>
         ///  Required designer variable.
@@ -30,7 +30,7 @@
         {
             pictureBox1 = new PictureBox();
             textBox1 = new TextBox();
-            listBox1 = new ListBox();
+            ChordTypeBox = new ListBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -40,30 +40,31 @@
             pictureBox1.Location = new Point(539, 89);
             pictureBox1.Margin = new Padding(5);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(722, 674);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.Size = new Size(720, 672);
+            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             pictureBox1.MouseUp += PictureBox1_MouseUp;
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(12, 89);
+            textBox1.Font = new Font("Segoe UI", 28F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.Location = new Point(21, 26);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(381, 45);
+            textBox1.Size = new Size(154, 82);
             textBox1.TabIndex = 0;
             // 
-            // listBox1
+            // ChordTypeBox
             // 
-            listBox1.BackColor = SystemColors.ScrollBar;
-            listBox1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 28;
-            listBox1.Location = new Point(907, 125);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(87, 116);
-            listBox1.TabIndex = 1;
-            listBox1.Click += ListBox1_Click;
+            ChordTypeBox.BackColor = SystemColors.ScrollBar;
+            ChordTypeBox.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ChordTypeBox.FormattingEnabled = true;
+            ChordTypeBox.ItemHeight = 21;
+            ChordTypeBox.Location = new Point(907, 125);
+            ChordTypeBox.Name = "ChordTypeBox";
+            ChordTypeBox.Size = new Size(87, 109);
+            ChordTypeBox.TabIndex = 1;
+            ChordTypeBox.Click += ListBox1_Click;
             // 
             // Form1
             // 
@@ -72,7 +73,7 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.Black;
             ClientSize = new Size(1797, 936);
-            Controls.Add(listBox1);
+            Controls.Add(ChordTypeBox);
             Controls.Add(textBox1);
             Controls.Add(pictureBox1);
             Font = new Font("Segoe UI", 14F);
@@ -88,6 +89,6 @@
 
         private PictureBox pictureBox1;
         private TextBox textBox1;
-        private ListBox listBox1;
+        private ListBox ChordTypeBox;
     }
 }
