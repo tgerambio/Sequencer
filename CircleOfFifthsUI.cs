@@ -63,7 +63,7 @@ namespace Sequencer
             }
 
         }
-        
+
         private void ListBox1_Click(object sender, EventArgs e)
         {
             ListBox lB = (ListBox)sender;
@@ -74,7 +74,7 @@ namespace Sequencer
 
             ChordTypeBox.Visible = false;
 
-            OnTypeClicked(EventArgs.Empty);// empty EventArgs for now..
+            OnTypeClicked(EventArgs.Empty);
         }
     }
 }
