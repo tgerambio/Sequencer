@@ -21,6 +21,8 @@ namespace Sequencer
 
         };
 
+        public SequenceBlocks stepper = new();
+
         private string? rootNote;
 
         private readonly List<string> majorChordTypes = ["M", "Δ", "7"];
@@ -32,7 +34,7 @@ namespace Sequencer
         {
             InitializeComponent();
             ChordTypeBox.Parent = pictureBox1;
-              
+            Application.Run(stepper);
         }
 
         public delegate void TypeClickedEventHandler(object sender, EventArgs e);
