@@ -16,13 +16,11 @@ namespace Sequencer
             {new(156, 409, 60, 60), "F" }, {new(131, 303, 60,60), "C" }, {new(159, 205, 60,60), "G"},{new(230, 128, 60, 60), "D"},
 
             {new(342, 178,40, 40),"B"  }, {new(408, 198, 40, 40),"F♯"},{new(456,245, 40, 40),"C♯" },{new(472, 314,40, 40),"G♯" },
-            {new(456, 378,40, 40),"E♭" }, {new(408,424,40, 40),"B♭"  },{new(342, 443, 40, 40),"F" },{new(276, 424,40, 40),"C" },
+            {new(456, 378,40, 40),"E♭"}, {new(408,424,40, 40),"B♭"  },{new(342, 443, 40, 40),"F" },{new(276, 424,40, 40),"C" },
             {new(226, 378, 40, 40),"G" }, {new(209, 314,40, 40),"D"  },{new(226,245,40, 40),"A" },{new(276,198,40, 40),"E" },
 
         };
 
-
-        
         private string? rootNote;
 
         private readonly List<string> majorChordTypes = ["M", "Δ", "7"];
@@ -34,7 +32,7 @@ namespace Sequencer
         {
             InitializeComponent();
             ChordTypeBox.Parent = pictureBox1;
-            ChordLabel.Text = "0";
+              
         }
 
         public delegate void TypeClickedEventHandler(object sender, EventArgs e);
@@ -53,12 +51,13 @@ namespace Sequencer
             {
                 if (rect.Contains(e.X, e.Y))
                 {
-                    rootNote = CoordMap[rect]; 
+                    rootNote = CoordMap[rect];
                     ChordTypeBox.Location = new Point(e.X, e.Y);
                     int x = rect.Width;
                     ChordTypeBox.DataSource = x == 70 ? majorChordTypes : x == 60 ? minorChordTypes : diminishedChordTypes;
                     ChordTypeBox.Visible = true;
                     break;
+                    
                 }
             }
 
@@ -70,11 +69,16 @@ namespace Sequencer
 
             string? cType = lB.SelectedItem?.ToString();
 
-            ChordLabel.Text =  rootNote + cType;
+            ChordLabel.Text = rootNote + (cType == "M" ? "" : cType);
 
             ChordTypeBox.Visible = false;
 
             OnTypeClicked(EventArgs.Empty);
+        }
+
+        private void ChordLabel_MouseHover(object sender, EventArgs e)
+        {
+            //MessageBox.Show("test");
         }
     }
 }

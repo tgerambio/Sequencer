@@ -49,8 +49,9 @@
             // 
             // ChordTypeBox
             // 
-            ChordTypeBox.BackColor = SystemColors.ScrollBar;
+            ChordTypeBox.BackColor = SystemColors.MenuText;
             ChordTypeBox.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ChordTypeBox.ForeColor = SystemColors.Window;
             ChordTypeBox.FormattingEnabled = true;
             ChordTypeBox.ItemHeight = 21;
             ChordTypeBox.Location = new Point(907, 125);
@@ -64,12 +65,13 @@
             ChordLabel.AutoSize = true;
             ChordLabel.Font = new Font("Imprint MT Shadow", 28F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             ChordLabel.ForeColor = SystemColors.ButtonFace;
-            ChordLabel.Location = new Point(859, 9);
+            ChordLabel.Location = new Point(844, 18);
             ChordLabel.Name = "ChordLabel";
-            ChordLabel.Size = new Size(70, 66);
+            ChordLabel.Size = new Size(109, 66);
             ChordLabel.TabIndex = 2;
-            ChordLabel.Text = "C";
-            ChordLabel.TextAlign = ContentAlignment.MiddleCenter;
+            ChordLabel.Text = "***";
+            ChordLabel.TextAlign = ContentAlignment.TopCenter;
+            ChordLabel.MouseHover += ChordLabel_MouseHover;
             // 
             // VoiceLeadCheckBox
             // 
