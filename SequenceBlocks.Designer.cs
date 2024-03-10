@@ -28,13 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            ListViewItem listViewItem1 = new ListViewItem("");
             BeatGrid = new TableLayoutPanel();
             groupBox1 = new GroupBox();
             menuStrip1 = new MenuStrip();
             toolStripComboBox1 = new ToolStripComboBox();
-            progressBar1 = new ProgressBar();
+            clearButton = new ToolStripMenuItem();
             comboBox1 = new ComboBox();
+            listView1 = new ListView();
             button1 = new Button();
+            button2 = new Button();
             groupBox1.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -89,7 +92,7 @@
             // 
             menuStrip1.BackColor = SystemColors.ControlDarkDark;
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripComboBox1 });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripComboBox1, clearButton });
             menuStrip1.Location = new Point(3, 27);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(994, 37);
@@ -98,47 +101,58 @@
             // 
             // toolStripComboBox1
             // 
+            toolStripComboBox1.AccessibleRole = AccessibleRole.ButtonDropDownGrid;
             toolStripComboBox1.BackColor = SystemColors.ControlDarkDark;
             toolStripComboBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            toolStripComboBox1.Items.AddRange(new object[] { "Clear", "Add" });
+            toolStripComboBox1.Items.AddRange(new object[] { "Sequence", "Velocity", "Sustain" });
             toolStripComboBox1.Name = "toolStripComboBox1";
-            toolStripComboBox1.Size = new Size(121, 33);
+            toolStripComboBox1.Size = new Size(95, 33);
             toolStripComboBox1.Text = "Options";
-            toolStripComboBox1.Click += ToolStripComboBox1_Click;
             // 
-            // progressBar1
+            // clearButton
             // 
-            progressBar1.Dock = DockStyle.Fill;
-            progressBar1.Location = new Point(0, 600);
-            progressBar1.MarqueeAnimationSpeed = 20;
-            progressBar1.Maximum = 32;
-            progressBar1.MaximumSize = new Size(1000, 30);
-            progressBar1.Minimum = 1;
-            progressBar1.MinimumSize = new Size(1000, 30);
-            progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(1000, 30);
-            progressBar1.Step = 1;
-            progressBar1.Style = ProgressBarStyle.Marquee;
-            progressBar1.TabIndex = 2;
-            progressBar1.Value = 32;
+            clearButton.BackColor = Color.Red;
+            clearButton.Name = "clearButton";
+            clearButton.Size = new Size(67, 33);
+            clearButton.Text = "Clear";
+            clearButton.Click += ClearButton_Click;
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(1118, 27);
+            comboBox1.Location = new Point(1128, 12);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(182, 33);
             comboBox1.TabIndex = 0;
             // 
+            // listView1
+            // 
+            listView1.Items.AddRange(new ListViewItem[] { listViewItem1 });
+            listView1.Location = new Point(1128, 64);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(182, 146);
+            listView1.TabIndex = 3;
+            listView1.UseCompatibleStateImageBehavior = false;
+            // 
             // button1
             // 
-            button1.Location = new Point(1051, 106);
+            button1.Location = new Point(1010, 64);
             button1.Name = "button1";
             button1.Size = new Size(112, 34);
-            button1.TabIndex = 3;
+            button1.TabIndex = 6;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(1010, 104);
+            button2.Name = "button2";
+            button2.Size = new Size(112, 34);
+            button2.TabIndex = 7;
+            button2.Text = "button2";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // SequenceBlocks
             // 
@@ -146,9 +160,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
             ClientSize = new Size(1322, 707);
+            Controls.Add(button2);
             Controls.Add(button1);
+            Controls.Add(listView1);
             Controls.Add(comboBox1);
-            Controls.Add(progressBar1);
             Controls.Add(groupBox1);
             DoubleBuffered = true;
             ForeColor = SystemColors.Control;
@@ -165,10 +180,13 @@
         #endregion
         private TableLayoutPanel BeatGrid;
         private GroupBox groupBox1;
-        private ProgressBar progressBar1;
         private ComboBox comboBox1;
         private MenuStrip menuStrip1;
+        private ListView listView1;
         private ToolStripComboBox toolStripComboBox1;
+        private ToolStripMenuItem clearButton;
+        private Label label1;
         private Button button1;
+        private Button button2;
     }
 }
