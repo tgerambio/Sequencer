@@ -12,35 +12,53 @@ namespace Sequencer
 {
     public partial class SequenceBlocks : Form
     {
-        
+        public HashSet<(int, int)> Selected = new();
         public SequenceBlocks()
         {
             InitializeComponent();
-            
-            SetSequence(16, 8);
+
+            SetSequenceDimensions(12, 8);
         }
 
-        void SetSequence(int range, int beats)
+        public void GetSequence()
+        {
+            List<(int, int)> coords = new();
+
+            foreach (PictureBox c in BeatGrid.Controls)
+            {
+                if (c.BackColor == Color.Lime)
+                {
+                    coords.Add((BeatGrid.GetRow(c), BeatGrid.GetColumn(c)));
+                }
+
+            }
+            MessageBox.Show(string.Join(" ", coords));
+        }
+        public void SetSequenceDimensions(int range, int beats)
         {
             BeatGrid.ColumnStyles.Clear();
-            BeatGrid.RowStyles.Clear() ;
+            BeatGrid.RowStyles.Clear();
 
             BeatGrid.RowCount = range;
             BeatGrid.ColumnCount = beats;
-            
-            for (int r = 0;r < range; r++)
+
+
+
+            for (int r = 0; r < range; r++)
             {
                 BeatGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / beats));
 
-                for (int b = 0;b < beats;b++)
+                BeatGrid.RowStyles.Add(new RowStyle(SizeType.Percent, 100 / range));
+                for (int b = 0; b < beats; b++)
                 {
-                    BeatGrid.RowStyles.Add(new RowStyle(SizeType.Percent, 100 / range));
+                    BeatGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / beats));
 
-                    var beatCell = new PictureBox()
+
+                    PictureBox beatCell = new()
                     {
                         Dock = DockStyle.Fill,
                         BackColor = Color.Black,
-                        
+
                     };
                     beatCell.Click += new EventHandler(BeatCell_Click);
 
@@ -62,10 +80,31 @@ namespace Sequencer
         private void BeatCell_Click(object sender, EventArgs e)
         {
             PictureBox beatCell = (PictureBox)sender;
-            Color c = beatCell.BackColor;
 
-            beatCell.BackColor = c == Color.Black ? Color.Lime : Color.Black;
+            beatCell.BackColor = beatCell.BackColor == Color.Black ? Color.Lime : Color.Black;
+
+            //raise event with coords to send as event args to phrasemap class
+        }
+
+        private void ToolStripComboBox1_Click(object sender, EventArgs e)
+        {
+            ToolStripComboBox tSCB = (ToolStripComboBox)sender;
+
+            string? s = tSCB.SelectedItem as string;
+
+            if (s == "Clear")
+            {
+                foreach (PictureBox beatCell in BeatGrid.Controls)
+                {
+                    if (beatCell.BackColor == Color.Lime)
+                    {
+                        BeatCell_Click(beatCell, EventArgs.Empty);
+                    }
+
+                }
+            }
 
         }
+
     }
 }
