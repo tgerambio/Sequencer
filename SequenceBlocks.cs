@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Sequencer
 {
@@ -23,9 +25,12 @@ namespace Sequencer
         public SequenceBlocks()
         {
             InitializeComponent();
+            SetSequenceDimensions(12, 8);
 
-            SetSequenceDimensions(12, 16);
+
+
         }
+
 
         public void GetSequence()
         {
@@ -43,11 +48,14 @@ namespace Sequencer
         }
         public void SetSequenceDimensions(int range, int beats)
         {
+
+
+            BeatGrid.Visible = false;
             Range = range;
             Beats = beats;
 
             Selected.Clear();
-
+            BeatGrid.Controls.Clear();
             BeatGrid.ColumnStyles.Clear();
             BeatGrid.RowStyles.Clear();
 
@@ -56,12 +64,13 @@ namespace Sequencer
 
             for (int r = 0; r < range; r++)
             {
-                BeatGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / beats));
+                BeatGrid.RowStyles.Add(new RowStyle(SizeType.Percent, 100 / Range));
 
-                BeatGrid.RowStyles.Add(new RowStyle(SizeType.Percent, 100 / range));
+
                 for (int b = 0; b < beats; b++)
                 {
-                    BeatGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / beats));
+
+                    BeatGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / Beats));
 
 
                     PictureBox beatCell = new()
@@ -76,7 +85,9 @@ namespace Sequencer
 
                 }
             }
+            BeatGrid.Visible = true;
         }
+
         protected override void OnResizeBegin(EventArgs e)
         {
             SuspendLayout();
@@ -87,6 +98,7 @@ namespace Sequencer
             ResumeLayout();
             base.OnResizeEnd(e);
         }
+
         private void BeatCell_Click(object sender, EventArgs e)
         {
             PictureBox beatCell = (PictureBox)sender;
@@ -121,7 +133,7 @@ namespace Sequencer
                 }
             }
             beatCount = (beatCount + 1) % Beats;
-            
+
 
             for (int i = 0; i < Range; i++)
             {
@@ -137,6 +149,70 @@ namespace Sequencer
 
 
 
+        /*
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            foreach (Tuple<int, int> t in Selected)
+            {
+                PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(t.Item2, t.Item1);
+                cell.BackColor = Color.Black;
+            }
+            Selected.Clear();
+            //event here
+        }
+        */
+        void Weird()
+        {
+            int counter = 1;
+            while (counter < 344)
+            {
+                Thread.Sleep(120);
+                OnBeat(this, EventArgs.Empty);
+                TestButton_Click(this, EventArgs.Empty);
+                counter++;
+            }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new Thread(new ThreadStart(Weird)).Start();
+
+
+
+        }
+
+        private void ReMapUpdateButton_Click(object sender, EventArgs e)
+        {
+            x++; y += 2;
+        }
+        int y = 1;
+        int x = 2;
+        private void TestButton_Click(object sender, EventArgs e)
+        {
+            List<Tuple<int, int>> nuCoords = new();
+
+            foreach (Tuple<int, int> t in Selected)
+            {
+                nuCoords.Add(new((t.Item1 + y) % Range, (t.Item2 + x) % Beats));
+            }
+
+            ClearButton_Click(this, EventArgs.Empty);
+
+            Selected = nuCoords;
+
+            foreach (Tuple<int, int> t in Selected)
+            {
+                PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(t.Item2, t.Item1);
+                cell.BackColor = Color.Lime;
+            }
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
@@ -146,30 +222,22 @@ namespace Sequencer
                 cell.BackColor = Color.Black;
             }
             Selected.Clear();
-        }
-       
-        void Weird()
-        {
-            int counter = 1;
-            while (counter < 144)
-            {
-                Thread.Sleep(80);
-                OnBeat(this, EventArgs.Empty);
-                
-                counter++;
-            }
-
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            OnBeat(this, EventArgs.Empty);
+            //event here
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void ResetDimensionsMenuItem_Click(object sender, EventArgs e)
         {
-            new Thread(new ThreadStart(Weird)).Start();
+            SetSequenceDimensions(Range, Beats);
+        }
 
+        private void RangeComboBox_TextChanged(object sender, EventArgs e)
+        {
+            Range = rangeComboBox.SelectedIndex + 1;
+        }
+
+        private void BeatsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Beats = beatsComboBox.SelectedIndex + 1;
         }
     }
 }

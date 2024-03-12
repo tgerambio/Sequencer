@@ -21,7 +21,7 @@ namespace Sequencer
 
         };
 
-        public SequenceBlocks stepper = new();
+        //public SequenceBlocks stepper = new();
 
         private string? rootNote;
 
@@ -34,7 +34,7 @@ namespace Sequencer
         {
             InitializeComponent();
             ChordTypeBox.Parent = pictureBox1;
-            Application.Run(stepper);
+            //Application.Run(stepper);
         }
 
         public delegate void TypeClickedEventHandler(object sender, EventArgs e);
