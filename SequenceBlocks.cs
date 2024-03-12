@@ -22,13 +22,11 @@ namespace Sequencer
         public int Beats { get; set; }
 
         private int beatCount = -1;
+
         public SequenceBlocks()
         {
             InitializeComponent();
-            SetSequenceDimensions(12, 8);
-
-
-
+            SetSequenceDimensions(22, 32);
         }
 
 
@@ -40,7 +38,7 @@ namespace Sequencer
             {
                 if (c.BackColor == Color.Lime)
                 {
-                    coords.Add((BeatGrid.GetRow(c), BeatGrid.GetColumn(c)));
+                    coords.Add(new(BeatGrid.GetColumn(c), BeatGrid.GetRow(c)));
                 }
 
             }
@@ -104,7 +102,7 @@ namespace Sequencer
             PictureBox beatCell = (PictureBox)sender;
 
             Tuple<int, int> coords = new(BeatGrid.GetRow(beatCell), BeatGrid.GetColumn(beatCell));
-
+          
             if (Selected.Contains(coords))
             {
                 beatCell.BackColor = Color.Black;
@@ -147,20 +145,6 @@ namespace Sequencer
             }
         }
 
-
-
-        /*
-        private void ClearButton_Click(object sender, EventArgs e)
-        {
-            foreach (Tuple<int, int> t in Selected)
-            {
-                PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(t.Item2, t.Item1);
-                cell.BackColor = Color.Black;
-            }
-            Selected.Clear();
-            //event here
-        }
-        */
         void Weird()
         {
             int counter = 1;
@@ -168,7 +152,7 @@ namespace Sequencer
             {
                 Thread.Sleep(120);
                 OnBeat(this, EventArgs.Empty);
-                TestButton_Click(this, EventArgs.Empty);
+                //TestButton_Click(this, EventArgs.Empty);
                 counter++;
             }
 
@@ -184,29 +168,38 @@ namespace Sequencer
 
         private void ReMapUpdateButton_Click(object sender, EventArgs e)
         {
-            x++; y += 2;
+
         }
-        int y = 1;
-        int x = 2;
+        int[][] jumps = new int[][] { new int[]{0,1 }, new int[] {1,0 }, new int[] {0, 19}, new int[] {19, 0} };
+        int i = 0;
         private void TestButton_Click(object sender, EventArgs e)
         {
             List<Tuple<int, int>> nuCoords = new();
 
             foreach (Tuple<int, int> t in Selected)
             {
-                nuCoords.Add(new((t.Item1 + y) % Range, (t.Item2 + x) % Beats));
-            }
+                int x = t.Item1;
+                int y = t.Item2;
 
-            ClearButton_Click(this, EventArgs.Empty);
+                nuCoords.Add(new((x + jumps[i][0]*i)%Range, (y + jumps[i][1]*i)%Beats));
+               
+            }
+            i = (i + 1) % 4;
+            foreach (Tuple<int, int> t in Selected)
+            {
+                PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(t.Item2, t.Item1);
+                cell.BackColor = Color.Black;
+            }
 
             Selected = nuCoords;
 
             foreach (Tuple<int, int> t in Selected)
             {
                 PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(t.Item2, t.Item1);
+               
                 cell.BackColor = Color.Lime;
             }
-
+            
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

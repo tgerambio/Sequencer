@@ -117,11 +117,12 @@
             // 
             // button2
             // 
+            button2.ForeColor = SystemColors.ActiveCaptionText;
             button2.Location = new Point(1010, 59);
             button2.Name = "button2";
             button2.Size = new Size(112, 34);
             button2.TabIndex = 7;
-            button2.Text = "button2";
+            button2.Text = "loop";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
@@ -253,7 +254,7 @@
             rangeMenuItem.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             rangeMenuItem.ForeColor = SystemColors.ButtonHighlight;
             rangeMenuItem.Name = "rangeMenuItem";
-            rangeMenuItem.Size = new Size(270, 36);
+            rangeMenuItem.Size = new Size(260, 36);
             rangeMenuItem.Text = "Range ↕";
             // 
             // rangeComboBox
@@ -269,12 +270,12 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(267, 6);
+            toolStripSeparator1.Size = new Size(257, 6);
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(267, 6);
+            toolStripSeparator2.Size = new Size(257, 6);
             // 
             // beatsMenuItem
             // 
@@ -283,7 +284,7 @@
             beatsMenuItem.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             beatsMenuItem.ForeColor = SystemColors.ButtonHighlight;
             beatsMenuItem.Name = "beatsMenuItem";
-            beatsMenuItem.Size = new Size(270, 36);
+            beatsMenuItem.Size = new Size(260, 36);
             beatsMenuItem.Text = "Beats ↔";
             // 
             // beatsComboBox
@@ -299,14 +300,14 @@
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(267, 6);
+            toolStripSeparator3.Size = new Size(257, 6);
             // 
             // resetDimensionsMenuItem
             // 
             resetDimensionsMenuItem.BackColor = Color.RoyalBlue;
             resetDimensionsMenuItem.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             resetDimensionsMenuItem.Name = "resetDimensionsMenuItem";
-            resetDimensionsMenuItem.Size = new Size(270, 36);
+            resetDimensionsMenuItem.Size = new Size(260, 36);
             resetDimensionsMenuItem.Text = "Set Dimensions";
             resetDimensionsMenuItem.Click += ResetDimensionsMenuItem_Click;
             // 
