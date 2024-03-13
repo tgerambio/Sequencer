@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
@@ -26,7 +27,7 @@ namespace Sequencer
         public SequenceBlocks()
         {
             InitializeComponent();
-            SetSequenceDimensions(22, 32);
+
         }
 
 
@@ -101,8 +102,10 @@ namespace Sequencer
         {
             PictureBox beatCell = (PictureBox)sender;
 
+           // MessageBox.Show(BeatGrid.GetCellPosition(beatCell).ToString());
+
             Tuple<int, int> coords = new(BeatGrid.GetRow(beatCell), BeatGrid.GetColumn(beatCell));
-          
+
             if (Selected.Contains(coords))
             {
                 beatCell.BackColor = Color.Black;
@@ -152,54 +155,93 @@ namespace Sequencer
             {
                 Thread.Sleep(120);
                 OnBeat(this, EventArgs.Empty);
+                CycleAroundPoint(counter/24);
                 //TestButton_Click(this, EventArgs.Empty);
                 counter++;
             }
 
         }
-
+        
         private void button2_Click(object sender, EventArgs e)
         {
             new Thread(new ThreadStart(Weird)).Start();
 
-
-
         }
 
+        void CycleAroundPoint(int center)
+        {
+            List<Tuple<int, int>> n = new();
+
+            int rows = BeatGrid.RowCount;
+            int columns = BeatGrid.ColumnCount;
+
+            int[] tr = { rows - 1, columns - 1 };
+            int[] br = { rows - 1, 1 };
+            int[] bl = { 1, 1 };
+            int[] tl = { 1, columns - 1 };
+
+            foreach (var s in Selected)
+            {
+                int c = s.Item2;
+                int r = s.Item1;
+
+                int[] add = c <= center && r < center ? tl :
+                r >= center && c < center ? bl :
+                c >= center && r > center ? br : tr;
+
+                n.Add(new((add[0] + r) % rows, (add[1] + c) % columns));
+
+
+            }
+
+            ClearButton_Click(this, EventArgs.Empty);
+            Selected = n;
+            foreach (var s in Selected)
+            {
+                PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(s.Item2, s.Item1);
+                cell.BackColor = Color.Lime;
+            }
+        }
         private void ReMapUpdateButton_Click(object sender, EventArgs e)
         {
 
         }
-        int[][] jumps = new int[][] { new int[]{0,1 }, new int[] {1,0 }, new int[] {0, 19}, new int[] {19, 0} };
+        int[][] jumps = new int[][] { new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { 0, 19 }, new int[] { 19, 0 } };
         int i = 0;
         private void TestButton_Click(object sender, EventArgs e)
         {
-            List<Tuple<int, int>> nuCoords = new();
+            List<Tuple<int, int>> n = new();
 
-            foreach (Tuple<int, int> t in Selected)
+            int rows = BeatGrid.RowCount;
+            int columns = BeatGrid.ColumnCount;
+
+            int[] tr = {rows-1, columns-1};
+            int[] br = {rows-1,  1};
+            int[] bl = { 1,  1};
+            int[] tl = { 1, columns-1};
+
+            foreach (var s in Selected)
             {
-                int x = t.Item1;
-                int y = t.Item2;
+                int c = s.Item2;
+                int r = s.Item1;
 
-                nuCoords.Add(new((x + jumps[i][0]*i)%Range, (y + jumps[i][1]*i)%Beats));
-               
+                int[] add = c <= 7 && r < 7 ? tl :
+                r >= 7 && c < 7 ? bl :
+                c >= 7 && r > 7 ? br : tr;
+
+                n.Add(new((add[0] + r)%rows, (add[1] + c)%columns));
+
+                
             }
-            i = (i + 1) % 4;
-            foreach (Tuple<int, int> t in Selected)
-            {
-                PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(t.Item2, t.Item1);
-                cell.BackColor = Color.Black;
-            }
 
-            Selected = nuCoords;
-
-            foreach (Tuple<int, int> t in Selected)
+            ClearButton_Click(this, EventArgs.Empty);
+            Selected = n;
+            foreach(var s in Selected)
             {
-                PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(t.Item2, t.Item1);
-               
+                PictureBox cell = (PictureBox)BeatGrid.GetControlFromPosition(s.Item2, s.Item1);
                 cell.BackColor = Color.Lime;
             }
-            
+
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -232,5 +274,12 @@ namespace Sequencer
         {
             Beats = beatsComboBox.SelectedIndex + 1;
         }
+
+        private void SequenceBlocks_Load(object sender, EventArgs e)
+        {
+            SetSequenceDimensions(22, 16);
+        }
+
+        
     }
 }

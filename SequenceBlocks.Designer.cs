@@ -341,6 +341,7 @@
             Name = "SequenceBlocks";
             Padding = new Padding(3);
             Text = "SequenceBlocks";
+            Load += SequenceBlocks_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)beatsSetter).EndInit();
